@@ -1,8 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import MeetingMenu from '../components/MeetingMenu.astro';
 ---
 
 <Layout title="Chit-Chat">
-	<main>
+	<main class="flex flex-col gap-20 items-center">
+		<Hero />
+		<MeetingMenu />
 	</main>
 </Layout>
