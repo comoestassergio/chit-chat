@@ -1,3 +1,12 @@
+---
+import { sanityClient } from "sanity:client";
+import {getTime, getDay, getMonth} from "../../utils";
+
+const posts = await sanityClient.fetch(`*[_type == "post" && defined(slug)] | order(date desc)`);
+const incompletePosts = posts.filter(post => !post.completed);
+const upcomingMeeting = incompletePosts[incompletePosts.length - 1];
+---
+
 <div class="text-center w-full">
   <section class="w-[90%] mx-auto max-w-3xl rounded-custom border-2 border-black">
     <header class="text-center bg-black text-white rounded-tl-[17px] rounded-tr-[17px] py-4">
@@ -5,17 +14,17 @@
     </header>
     <article class="grid grid-cols-1 md:grid-cols-[auto_1fr]">
       <div id="date" class="p-8 flex flex-col gap-2 text-center border-b-2 border-black md:border-b-0 md:border-r-2">
-        <span class="text-5xl font-ultra">20</span>
-        <span>октября</span>
+        <span class="text-5xl font-ultra">{getDay(new Date(upcomingMeeting.date))}</span>
+        <span>{getMonth(new Date(upcomingMeeting.date))}</span>
       </div>
       <div id="topic" class="flex flex-col gap-8 py-8 px-6 md:flex-row md:gap-4">
         <div class="flex flex-col text-center md:text-start">
-          <h3 class="text-2xl font-ultra">AI: A blessing or a curse</h3>
-          <p>баклажан на островского // 19:00 // 500р</p>
+          <h3 class="text-2xl font-ultra">{upcomingMeeting.topic}</h3>
+          <p><span>{upcomingMeeting.address}</span> // <span>{getTime(new Date(upcomingMeeting.date))}</span> // {upcomingMeeting.price} р</p>
         </div>
         <a href="#" class="flex items-center justify-center h-10 px-6 rounded-custom bg-black text-white md:ms-auto md:max-w-fit">записаться</a>
       </div>
     </article>
   </section>
-  <a href="/records" class="inline-block underline mt-8">смотреть предыдущие встречи</a>
+  <a href="/posts" class="inline-block underline mt-8">смотреть предыдущие встречи</a>
 </div>
