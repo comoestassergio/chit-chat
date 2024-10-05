@@ -7,6 +7,7 @@ import { sanityClient } from "sanity:client";
 import {getTime, getDay, getMonth} from "../../utils";
 
 const posts = await sanityClient.fetch(`*[_type == "post" && defined(slug)] | order(date desc)`);
+// @ts-ignore
 const completedPosts = posts.filter(post => post.completed);
 
 ---
@@ -19,7 +20,7 @@ const completedPosts = posts.filter(post => post.completed);
         <header class="text-center bg-black text-white rounded-tl-[17px] rounded-tr-[17px] py-4">
           <h2>прошлые встречи</h2>
         </header>
-        {completedPosts.map(post => (
+        {completedPosts.map((post: { date: string | number | Date; topic: unknown; address: unknown; }) => (
           <article class="grid grid-cols-1 md:grid-cols-[150px_1fr] [&:not(:last-child)]:border-b-2 border-black">
             <div id="date" class="p-8 flex flex-col gap-2 text-center border-b-2 border-black md:border-b-0 md:border-r-2">
               <span class="text-5xl font-ultra">{getDay(new Date(post.date))}</span>

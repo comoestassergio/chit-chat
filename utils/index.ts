@@ -21,6 +21,7 @@ export function getDay(date: Date) {
 
 export function getMonth(date: Date) {
   const month = date.getMonth().toString();
+  // @ts-ignore
   const monthString = MONTH_MAP[month];
   return monthString;
 }

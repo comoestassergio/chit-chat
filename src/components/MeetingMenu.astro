@@ -3,6 +3,7 @@ import { sanityClient } from "sanity:client";
 import {getTime, getDay, getMonth} from "../../utils";
 
 const posts = await sanityClient.fetch(`*[_type == "post" && defined(slug)] | order(date desc)`);
+// @ts-ignore
 const incompletePosts = posts.filter(post => !post.completed);
 const upcomingMeeting = incompletePosts[incompletePosts.length - 1];
 ---
